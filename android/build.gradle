@@ -54,5 +54,5 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.nizwar:openvpn_library:master-SNAPSHOT'
+    implementation project(':vpnLib')
 }
