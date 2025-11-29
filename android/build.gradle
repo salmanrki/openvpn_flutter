@@ -54,6 +54,6 @@ android {
 }
 
 dependencies {
-    // Keep for Java/AIDL code, but our bundled .so files will override the AAR's libraries
-    implementation 'com.github.nizwar:openvpn_library:b3941ef040'
+    // Using your fork with 16KB-aligned native libraries
+    implementation 'com.github.salmanrki:openvpn_library:c22bc07'
 }
