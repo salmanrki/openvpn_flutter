@@ -54,6 +54,6 @@ android {
 }
 
 dependencies {
-    // Using your fork with 16KB-aligned native libraries
-    implementation 'com.github.salmanrki:openvpn_library:c22bc07'
+    // Using your fork with 16KB-aligned native libraries from android_16kb branch
+    implementation 'com.github.salmanrki:openvpn_library:android_16kb-SNAPSHOT'
 }
