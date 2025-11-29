@@ -33,6 +33,7 @@ allprojects {
 apply plugin: 'com.android.library'
 
 android {
+    namespace 'id.laskarmedia.openvpn_flutter'
     compileSdkVersion 36
     ndkVersion '28.0.12674087'  // NDK R28 for 16KB page size support
 
