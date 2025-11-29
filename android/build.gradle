@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.7.3'
     }
 }
 
@@ -34,15 +34,22 @@ apply plugin: 'com.android.library'
 
 android {
     namespace = 'id.laskarmedia.openvpn_flutter'
-    compileSdkVersion 34
+    compileSdkVersion 36
+    ndkVersion '28.0.12674087'  // NDK R28 for 16KB support
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
+    }
+    
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = false  // Required for 16KB page size support
+        }
     }
 }
 
