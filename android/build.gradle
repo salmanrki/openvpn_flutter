@@ -49,12 +49,13 @@ android {
     packagingOptions {
         jniLibs {
             useLegacyPackaging = false  // Required for 16KB page size support
-            pickFirsts += ['**/*.so']  // Use our 16KB-aligned .so files, not the AAR's
+            // Exclude all .so files from dependencies
+            excludes += ['lib/**/*.so']
         }
     }
 }
 
 dependencies {
-    // Use original library for Java/AIDL code; our 16KB .so files override via packagingOptions
+    // Use original library for Java/AIDL code only; native libs excluded via packagingOptions
     implementation 'com.github.nizwar:openvpn_library:b3941ef040'
 }
