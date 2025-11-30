@@ -46,16 +46,23 @@ android {
         minSdkVersion 21
     }
     
+    // Prioritize our local 16KB jniLibs over AAR libraries
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
+    
     packagingOptions {
         jniLibs {
             useLegacyPackaging = false  // Required for 16KB page size support
-            // Exclude all .so files from dependencies
-            excludes += ['lib/**/*.so']
+            // Use our local 16KB libs, not AAR's 4KB libs
+            pickFirsts += ['**/libopenvpn.so', '**/libovpnexec.so', '**/libovpnutil.so', '**/libosslutil.so']
         }
     }
 }
 
 dependencies {
-    // Use original library for Java/AIDL code only; native libs excluded via packagingOptions
+    // AAR provides Java/AIDL code; our jniLibs/ has 16KB-aligned natives with higher priority
     implementation 'com.github.nizwar:openvpn_library:b3941ef040'
 }
