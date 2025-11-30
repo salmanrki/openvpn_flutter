@@ -54,7 +54,6 @@ android {
 }
 
 dependencies {
-    // All sources and 16KB-aligned libraries bundled directly
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+    // Use original library for Java/AIDL code, our bundled 16KB .so files override theirs
+    implementation 'com.github.nizwar:openvpn_library:b3941ef040'
 }
