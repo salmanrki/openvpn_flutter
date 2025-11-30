@@ -1,3 +1,19 @@
+## 1.3.4
+* Fix notification issue for newest SDK
+## 1.3.3
+* Solving namespace for android build
+## 1.3.2
+* Fix datetime that being nulled (VPN Status)
+## 1.3.1
+* Upgrade library gradles
+* Update native for Permission channel name ($APPNAME VPN Background & $APPNAME VPN Stats)
+* Clearify notifications on readme.md
+## 1.3.0
+* Adept for SDK 34
+* Solving #105, #29, #99
+* Update examples to support flutter latest flutter (3.22.2 tested)
+## 1.2.2
+* Update openvpnlib
 ## 1.2.1
 * Update openvpnlib
 ## 1.2.0+1

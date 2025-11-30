@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math'; 
+import 'dart:math';
 import 'package:flutter/services.dart';
 import 'model/vpn_status.dart';
 
@@ -61,6 +61,8 @@ class OpenVPN {
   ///Use tempDateTime to countdown, especially on android that has delays
   DateTime? _tempDateTime;
 
+  VPNStage? _lastStage;
+
   /// is a listener to see vpn status detail
   final Function(VpnStatus? data)? onVpnStatusChanged;
 
@@ -87,7 +89,7 @@ class OpenVPN {
     String? localizedDescription,
     String? groupIdentifier,
     Function(VpnStatus status)? lastStatus,
-    Function(VPNStage status)? lastStage,
+    Function(VPNStage stage)? lastStage,
   }) async {
     if (Platform.isIOS) {
       assert(
@@ -104,8 +106,15 @@ class OpenVPN {
       "providerBundleIdentifier": providerBundleIdentifier,
       "localizedDescription": localizedDescription,
     }).then((value) {
-      status().then((value) => lastStatus?.call(value));
-      stage().then((value) => lastStage?.call(value));
+      Future.wait([
+        status().then((value) => lastStatus?.call(value)),
+        stage().then((value) {
+          if (value == VPNStage.connected && _vpnStatusTimer == null) {
+            _createTimer();
+          }
+          return lastStage?.call(value);
+        }),
+      ]);
     });
   }
 
@@ -187,7 +196,8 @@ class OpenVPN {
             var data = jsonDecode(value);
             var connectedOn =
                 DateTime.tryParse(data["connected_on"].toString()) ??
-                    _tempDateTime;
+                    _tempDateTime ??
+                    DateTime.now();
             String byteIn =
                 data["byte_in"] != null ? data["byte_in"].toString() : "0";
             String byteOut =
@@ -196,8 +206,7 @@ class OpenVPN {
             if (byteOut.trim().isEmpty) byteOut = "0";
             return VpnStatus(
               connectedOn: connectedOn,
-              duration:
-                  _duration(DateTime.now().difference(connectedOn!).abs()),
+              duration: _duration(DateTime.now().difference(connectedOn).abs()),
               byteIn: byteIn,
               byteOut: byteOut,
               packetsIn: byteIn,
@@ -275,7 +284,10 @@ class OpenVPN {
   void _initializeListener() {
     _vpnStageSnapshot().listen((event) {
       var vpnStage = _strToStage(event);
-      onVpnStageChanged?.call(vpnStage, event);
+      if (vpnStage != _lastStage) {
+        onVpnStageChanged?.call(vpnStage, event);
+        _lastStage = vpnStage;
+      }
       if (vpnStage != VPNStage.disconnected) {
         if (Platform.isAndroid) {
           _createTimer();

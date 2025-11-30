@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.7.3'
     }
 }
 
@@ -33,9 +33,7 @@ allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    namespace 'id.laskarmedia.openvpn_flutter'
-    compileSdkVersion 36
-    ndkVersion '28.0.12674087'  // NDK R28 for 16KB page size support
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -48,13 +46,11 @@ android {
     
     packagingOptions {
         jniLibs {
-            useLegacyPackaging = false
+
         }
     }
 }
 
 dependencies {
-    implementation 'com.github.nizwar:openvpn_library:b3941ef040'
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+
 }
