@@ -55,6 +55,7 @@ android {
 }
 
 dependencies {
-    // Use original library for Java/AIDL code; our 16KB .so files override via packagingOptions
-    implementation 'com.github.nizwar:openvpn_library:b3941ef040'
+    // All sources bundled directly - no JitPack dependency needed
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
 }
