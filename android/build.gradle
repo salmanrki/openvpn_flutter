@@ -49,11 +49,13 @@ android {
     packagingOptions {
         jniLibs {
             useLegacyPackaging = false  // Required for 16KB page size support
+            pickFirsts += ['**/*.so']  // Use our 16KB-aligned .so files, not the AAR's
         }
     }
 }
 
 dependencies {
-    // Use original library for Java/AIDL code, our bundled 16KB .so files override theirs
-    implementation 'com.github.nizwar:openvpn_library:b3941ef040'
+    // All sources bundled directly - no JitPack dependency needed
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
 }
