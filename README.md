@@ -1,4 +1,4 @@
-Connect to the OpenVPN service using Flutter. Contributions through issues and pull requests are highly appreciated!
+
 
 ## Android Setup
 
