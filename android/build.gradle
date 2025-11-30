@@ -33,9 +33,7 @@ allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    namespace = 'id.laskarmedia.openvpn_flutter'
-    compileSdkVersion 36
-    ndkVersion '28.0.12674087'  // NDK R28 for 16KB support
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -48,12 +46,11 @@ android {
     
     packagingOptions {
         jniLibs {
-            useLegacyPackaging = false  // Required for 16KB page size support
+
         }
     }
 }
 
 dependencies {
-    // Use original library for Java/AIDL code, our bundled 16KB .so files override theirs
-    implementation 'com.github.nizwar:openvpn_library:b3941ef040'
+
 }
