@@ -46,10 +46,18 @@ android {
         minSdkVersion 21
     }
     
+    // Prioritize our local 16KB jniLibs over AAR libraries
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
+    
     packagingOptions {
         jniLibs {
             useLegacyPackaging = false  // Required for 16KB page size support
-            pickFirsts += ['**/*.so']  // Use our 16KB-aligned .so files, not the AAR's
+            // Use our local 16KB libs, not AAR's 4KB libs
+            pickFirsts += ['**/libopenvpn.so', '**/libovpnexec.so', '**/libovpnutil.so', '**/libosslutil.so']
         }
     }
 }
